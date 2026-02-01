@@ -1,0 +1,96 @@
+version: "2"
+run:
+  concurrency: 8
+  timeout: 1m
+  issues-exit-code: 1
+  tests: true
+
+output:
+  formats:
+    text:
+      # Output path can be either `stdout`, `stderr` or path to the file to write to.
+      # Default: stdout
+      path: ./tmp/output.txt
+      # Print linter name in the end of issue text.
+      # Default: true
+      print-linter-name: true
+      # Print lines of code with issue.
+      # Default: true
+      print-issued-lines: true
+      # Use colors.
+      # Default: true
+      colors: true
+
+linters:
+  default: all
+  disable:
+    - recvcheck
+    - errcheck
+    - iface
+    - wsl
+    - paralleltest
+    - varnamelen
+    - tparallel
+    - testpackage
+    - exhaustruct
+    - ireturn
+    - gosec
+    - dogsled
+    - forbidigo
+    - nakedret
+    - gochecknoinits
+    - depguard
+    - godox
+    - tagliatelle
+    - nonamedreturns
+    - revive
+    - errchkjson
+    - tagalign
+    - canonicalheader
+    - gochecknoglobals
+    - containedctx
+    - wrapcheck
+    - contextcheck
+    - usestdlibvars
+    - mnd
+    - exhaustive
+    - forcetypeassert
+    - nilerr
+    - gosmopolitan
+    - fatcontext
+    - cyclop
+    - lll
+    - dupl
+    - nestif
+    - funlen
+    - gocognit
+    - gocritic
+    - gocyclo
+    - maintidx
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - funlen
+          - dupl
+          - goconst
+          - errchkjson
+          - err113
+          - gocognit
+          - stylecheck
+          - testifylint
+          - unparam
+          - maintidx
+          - whitespace
+          - noctx
+          - errorlint
+          - intrange
+          - bodyclose
+          - cyclop
+          - godot
+          - nlreturn
+          - staticcheck
+      - linters:
+          - staticcheck
+        text: "QF1008:"

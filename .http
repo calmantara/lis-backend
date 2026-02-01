@@ -1,0 +1,12 @@
+POST http://localhost:8880/api/v1/device-messages HTTP/1.1
+Content-Type: application/json
+X-Application-Key:oXncd8mLhXTYy1aPbqhTF8eUbo3PoERO
+X-Application-ID:LH1
+X-Client-ID:d2fe3ef4-6613-49c0-aff0-363ce09b9745
+
+{
+  "device_id": "7cdea1a5-f568-477f-97ee-0f7dcf8d6714",
+  "device_type_code": "analyzer",
+  "protocol":"hl7",
+  "message":"hello"
+}

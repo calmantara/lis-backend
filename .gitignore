@@ -1,0 +1,12 @@
+.vscode
+.env
+.DS_Store
+.build
+build
+__debug_*
+tmp
+bin
+*.duckdb
+*.duckdb.wal
+*.json
+coverage.txt

@@ -1,0 +1,77 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: lis_backend
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: apppassword
+    ports:
+      - "33306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./tools/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  lis-migrator:
+    build:
+      context: .
+      dockerfile: ./tools/image/Dockerfile.app
+    container_name: lis-migrator
+    env_file:
+      - .docker.env
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+    command: ["job", "migration", "up", "./tools/migrations"]
+  lis-backend:
+    build:
+      context: .
+      dockerfile: ./tools/image/Dockerfile.app
+    container_name: lis-backend
+    restart: unless-stopped
+    env_file:
+      - .docker.env
+    ports:
+      - "4000:4000"
+    depends_on:
+      lis-migrator:
+        condition: service_completed_successfully
+      mysql:
+        condition: service_healthy
+    networks:
+      - app-network
+    command: ["http"]
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    restart: unless-stopped
+    ports:
+      - "8880:8880"
+      - "8443:443"
+    volumes:
+      - ./tools/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./tools/nginx/logs:/var/log/nginx
+    depends_on:
+      - lis-backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
