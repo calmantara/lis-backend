@@ -1,4 +1,4 @@
-POST http://localhost:8880/api/v1/device-messages HTTP/1.1
+POST http://lis.hexavara.com:8880/api/v1/device-messages HTTP/1.1
 Content-Type: application/json
 X-Application-Key:oXncd8mLhXTYy1aPbqhTF8eUbo3PoERO
 X-Application-ID:LH1
@@ -9,4 +9,18 @@ X-Client-ID:d2fe3ef4-6613-49c0-aff0-363ce09b9745
   "device_type_code": "analyzer",
   "protocol":"hl7",
   "message":"hello"
+}
+
+####
+POST http://localhost:4001/api/v1/device-messages HTTP/1.1
+Content-Type: application/json
+X-Application-Key:oXncd8mLhXTYy1aPbqhTF8eUbo3PoERO
+X-Application-ID:LH1
+X-Client-ID:d2fe3ef4-6613-49c0-aff0-363ce09b9745
+
+{
+  "device_id": "7cdea1a5-f568-477f-97ee-0f7dcf8d6714",
+  "device_type_code": "analyzer",
+  "protocol":"hl7",
+  "message":"MSH|^~&|LAB|LIS|EHR|HOSP|202501011200||ORU^R01|12345|P|2.3\\nPID|1||123456^^^Hospital^MR||Doe^John^A||19800101|M|||123 Main St^^Metropolis^NY^10001^USA\\nOBR|1||67890^LAB|CMP^Comprehensive Metabolic Panel|||202501011120\\nOBX|1|NM|GLU^Glucose^L|1|90|mg/dL|70-100|N|||F\\nOBX|2|NM|NA^Sodium^L|1|140|mmol/L|135-145|N|||F"
 }

@@ -19,10 +19,10 @@ func (DeviceMessage) TableName() string {
 }
 
 type DeviceMessageParam struct {
-	DeviceID       string `json:"device_id"`
-	DeviceTypeCode string `json:"device_type_code"`
-	Message        string `json:"message"`
-	Protocol       string `json:"protocol"`
+	DeviceID       string `json:"device_id" form:"device_id"`
+	DeviceTypeCode string `json:"device_type_code" form:"device_type_code"`
+	Message        string `json:"message" form:"message"`
+	Protocol       string `json:"protocol" form:"protocol"`
 }
 
 func (d DeviceMessageParam) Validate() error {

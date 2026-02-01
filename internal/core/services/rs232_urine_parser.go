@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/Calmantara/lis-backend/internal/core/models"
+	"github.com/Calmantara/lis-backend/internal/utils"
 )
 
 type UrineTestResult struct {
@@ -44,10 +45,15 @@ func (result *UrineTestResult) Stringify() string {
 }
 
 func (result *UrineTestResult) Serialize(deviceMessage models.DeviceMessage) models.Serializer {
+	seqNum := utils.FindAllInteger(result.SpecimenID)
+
 	res := models.Serializer{
 		DeviceID:       deviceMessage.DeviceID,
 		Protocol:       string(deviceMessage.Protocol),
 		DeviceTypeCode: deviceMessage.DeviceTypeCode,
+		SequenceNumber: seqNum,
+		PatientID:      result.SpecimenID,
+		Timestamp:      result.DateTime,
 	}
 
 	// Leukocytes      TestValue `json:"leukocytes"`

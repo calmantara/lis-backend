@@ -52,6 +52,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rotisserie/eris v0.5.4
 	github.com/spf13/pflag v1.0.10 // indirect
+	github.com/yehezkel/gohl7 v1.0.0
 	go.uber.org/dig v1.19.0
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/gorm v1.31.1

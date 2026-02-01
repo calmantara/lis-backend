@@ -61,8 +61,10 @@ func (d *deviceMessageSvcImpl) routingMessage(ctx context.Context, deviceMessage
 
 	switch deviceMessage.Protocol {
 	case "hl7":
-		// message := strings.TrimSpace(deviceMessage.Message)
-		// parsedMessage = parseHL7Message(message)
+		parsedMessage, err = parseHL7Message(deviceMessage)
+		if err != nil {
+			return nil, err
+		}
 	case "rs232":
 		switch deviceMessage.DeviceTypeCode {
 		default:

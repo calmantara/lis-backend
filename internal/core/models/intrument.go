@@ -14,14 +14,16 @@ type Serializer struct {
 	PatientID      string    `json:"patient_id"`
 	Timestamp      time.Time `json:"timestamp"`
 	DeviceTypeCode string    `json:"device_type_code"`
-	Message        string    `json:"message"`
 	Results        []Result  `json:"results"`
 }
 
 type Result struct {
-	ParameterCode string  `json:"parameter_code"`
-	Value         string  `json:"value"`
-	NumericValue  float64 `json:"numeric_value"`
-	Unit          string  `json:"unit"`
-	Qualitative   string  `json:"qualitative"`
+	ParameterCode  string  `json:"parameter_code"`
+	ParameterName  string  `json:"parameter_name"`
+	Value          string  `json:"value"`
+	NumericValue   float64 `json:"numeric_value"`
+	Unit           string  `json:"unit"`
+	Qualitative    string  `json:"qualitative"`
+	ReferenceRange string  `json:"reference_range"`
+	AbnormalFlags  string  `json:"abnormal_flag"`
 }
