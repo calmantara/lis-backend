@@ -45,7 +45,7 @@ func (result *UrineTestResult) Stringify() string {
 }
 
 func (result *UrineTestResult) Serialize(deviceMessage models.DeviceMessage) models.Serializer {
-	seqNum := utils.FindAllInteger(result.SpecimenID)
+	seqNum := strconv.Itoa(utils.FindAllInteger(result.SpecimenID))
 
 	res := models.Serializer{
 		DeviceID:       deviceMessage.DeviceID,

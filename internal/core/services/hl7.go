@@ -1,13 +1,13 @@
 package services
 
 import (
+	"strconv"
 	"strings"
 	"time"
 
 	"github.com/Calmantara/lis-backend/internal/core/models"
+	"github.com/Calmantara/lis-backend/internal/helpers/parsers"
 	"github.com/Calmantara/lis-backend/internal/utils"
-
-	"github.com/yehezkel/gohl7"
 )
 
 type HL7TestResult struct {
@@ -48,11 +48,11 @@ func (s *HL7TestResult) Stringify() string {
 }
 
 func (s *HL7TestResult) Serialize(deviceMessage models.DeviceMessage) models.Serializer {
-	seqNum := 0
+	seqNum := ""
 	patientID := ""
 	if len(s.Patient.Identifiers) > 0 {
 		patientID = s.Patient.Identifiers[0].ID
-		seqNum = utils.FindAllInteger(s.Patient.Identifiers[0].ID)
+		seqNum = strconv.Itoa(utils.FindAllInteger(s.Patient.Identifiers[0].ID))
 	}
 
 	res := models.Serializer{
@@ -81,18 +81,13 @@ func (s *HL7TestResult) Serialize(deviceMessage models.DeviceMessage) models.Ser
 
 func parseHL7Message(deviceMessage models.DeviceMessage) (res *HL7TestResult, err error) {
 	msg := strings.TrimSpace(deviceMessage.Message)
-	parser, err := gohl7.NewHl7Parser([]byte(msg))
-	if err != nil {
-		return nil, err
-	}
-
-	hl7Payload, err := parser.Parse()
+	parsedMessage, err := parsers.ParseHL7Message(msg)
 	if err != nil {
 		return nil, err
 	}
 
 	res = &HL7TestResult{}
-	err = utils.ObjectMapper(&hl7Payload, &res)
+	err = utils.ObjectMapper(&parsedMessage, &res)
 
 	return
 }

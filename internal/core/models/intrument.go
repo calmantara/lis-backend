@@ -9,7 +9,7 @@ type Message interface {
 
 type Serializer struct {
 	DeviceID       string    `json:"device_id"`
-	SequenceNumber int       `json:"sequence_number"`
+	SequenceNumber string    `json:"sequence_number"`
 	Protocol       string    `json:"protocol"`
 	PatientID      string    `json:"patient_id"`
 	Timestamp      time.Time `json:"timestamp"`

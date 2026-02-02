@@ -1,6 +1,8 @@
 package models
 
 import (
+	"encoding/base64"
+
 	"github.com/Calmantara/lis-backend/internal/helpers/errors"
 	"github.com/google/uuid"
 )
@@ -25,10 +27,16 @@ type DeviceMessageParam struct {
 	Protocol       string `json:"protocol" form:"protocol"`
 }
 
-func (d DeviceMessageParam) Validate() error {
+func (d *DeviceMessageParam) Validate() error {
 	if d.DeviceID == "" || d.DeviceTypeCode == "" || d.Message == "" || d.Protocol == "" {
 		return errors.ERROR_BAD_REQUEST
 	}
+
+	decodedBytes, err := base64.StdEncoding.DecodeString(d.Message)
+	if err != nil {
+		return err
+	}
+	d.Message = string(decodedBytes)
 
 	return nil
 }
