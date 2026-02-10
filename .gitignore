@@ -9,4 +9,5 @@ bin
 *.duckdb
 *.duckdb.wal
 *.json
+*.log
 coverage.txt
